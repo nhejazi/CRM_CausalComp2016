@@ -6,6 +6,7 @@
 ### Script #2: Impute using SL   ###
 ###==============================###
 
+library(SuperLearner)
 
 full_data <- micedata[, c(5:26), with = FALSE]
 
