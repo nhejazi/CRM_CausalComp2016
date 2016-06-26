@@ -17,10 +17,13 @@ yfit <- list()
 
 for (idx in 1:length(missvars)) {
   set.seed(0)
-  #organize data into learning matrix and prediction set
-  y_idx <- which(colnames(obs_O) == missvars[idx])
-  y <- as.vector(subset(obs_O, select = y_idx)[, 1])
-  X <- subset(obs_O, select = -y_idx)
+  #get prediction covariate
+  y <- subset(obs_O, select = names(which(is.na(colSums(obs_O))))[idx])
+  y <- as.vector(y[, 1])
+
+  #get covariates for training
+  X <- subset(obs_O,
+              select = names(obs_O) != names(which(is.na(colSums(obs_O))))[idx])
 
   #get rid of all missing values remaining in training data
   X[is.na(X)] <- 0  #many other options for imputation, zero just to start

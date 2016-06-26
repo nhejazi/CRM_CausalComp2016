@@ -7,8 +7,8 @@
 ###==============================###
 
 # basic programmatic housekeeping
-proj_path <- "~/git_repos/crm_comp2016/analysis/"
-data_path <- paste0(proj_path, "/../data/")
+proj_path <- "~/git_repos/CRM_CausalComp2016/analysis/"
+data_path <- "~/git_repos/CRM_CausalComp2016/data/"
 library(data.table)
 library(ggplot2)
 
