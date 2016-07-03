@@ -21,6 +21,6 @@ knockout <- subset(micedata, is.na(rowSums(micedata[, c(5:26), with = FALSE])))
 #missvars <- colnames(micedata)[which(is.na(colSums(micedata[, c(5:26),
 #                                                   with = FALSE])))]
 miss_subj <- which(is.na(rowSums(as.data.frame(micedata)[, 5:26])))
-missinfo <- (codebook$nam)[which(codebook$ph %in% missvars)]
+#missinfo <- (codebook$nam)[which(codebook$ph %in% missvars)]
 
 #EndScript
