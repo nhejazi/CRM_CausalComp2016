@@ -9,7 +9,6 @@
 library(SuperLearner); library(mice)
 SL.library <- c("SL.loess", "SL.glm", "SL.bayesglm", "SL.stepAIC", "SL.gam",
                 "SL.mean")
-CV_folds = 10
 
 # generate observed data and find variables with missingness
 obs_O <- as.data.frame(micedata[, c(5:26), with = FALSE])
@@ -17,29 +16,37 @@ obs_O.missing <- md.pattern(obs_O)
 varsNA <- names(which(is.na(colSums(obs_O, na.rm = FALSE))))
 
 # imputation and variable scaling
-obs_O.impute <- obs_O
-obs_O.impute[is.na(obs_O.impute)] <- 0  #Zero replacement, try empirical Bayes
-O.imputed.scaled <- scale(obs_O.impute)
+#obs_O.impute <- obs_O
+#obs_O.impute[is.na(obs_O.impute)] <- 0  #Zero replacement, try empirical Bayes
+scaled_O <- scale(obs_O)
 
 yfit <- list()  #store predicted values over all folds of cross-validation
 
 for (idx in 1:length(varsNA)) {
   set.seed(0)
   #get prediction covariate
-  y <- subset(O.imputed.scaled, select = varsNA[idx])
+  y <- subset(scaled_O, select = varsNA[idx])
   y <- as.vector(y[, 1])
 
+  #make missingness indicators for other covariates
+  indNA <- list()
+  varsNAind <- varsNA[varsNA %ni% varsNA[idx]]
+  for (i in varsNAind) {
+    varNA_i <- subset(scaled_O, select = -i)
+    indicatorNA <- as.integer(!is.na(varNA_i))
+    indNA[[i]] <- indicatorNA
+  }
+
   #get covariates for training
-  X <- subset(O.imputed.scaled,
-              select = colnames(O.imputed.scaled) !=varsNA[idx])
+  X <- subset(scaled_O, select = colnames(O.imputed.scaled) !=varsNA[idx])
   X <- as.data.frame(X)
 
   #get rid of all missing values remaining in training data
   #X[is.na(X)] <- 0  #many other options for imputation, zero just to start
 
   #use SuperLearner with 10-fold cross-validation to predict missing gene Y
-  yfit.SL <- CV.SuperLearner(y, X, V = CV_folds, family = gaussian(),
-                             SL.library = SL.library, verbose = TRUE)
+  yfit.SL <- SuperLearner(y, X, family = gaussian(), SL.library = SL.library,
+                          verbose = TRUE)
   yfit[[idx]] <- yfit.SL$SL.predict
 }
 
