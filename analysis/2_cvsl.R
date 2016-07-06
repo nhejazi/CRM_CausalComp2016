@@ -6,18 +6,15 @@
 ### Script #2: Imputation & SL   ###
 ###==============================###
 
-library(SuperLearner); library(mice)
+library(SuperLearner)
 SL.library <- c("SL.loess", "SL.glm", "SL.bayesglm", "SL.stepAIC", "SL.gam",
                 "SL.mean")
 
 # generate observed data and find variables with missingness
 obs_O <- as.data.frame(micedata[, c(5:26), with = FALSE])
-obs_O.missing <- md.pattern(obs_O)
 varsNA <- names(which(is.na(colSums(obs_O, na.rm = FALSE))))
 
-# imputation and variable scaling
-#obs_O.impute <- obs_O
-#obs_O.impute[is.na(obs_O.impute)] <- 0  #Zero replacement, try empirical Bayes
+# variable scaling
 scaled_O <- scale(obs_O)
 
 yfit <- list()  #store predicted values over all folds of cross-validation
@@ -31,20 +28,23 @@ for (idx in 1:length(varsNA)) {
   #make missingness indicators for other covariates
   indNA <- list()
   varsNAind <- varsNA[varsNA %ni% varsNA[idx]]
-  for (i in varsNAind) {
-    varNA_i <- subset(scaled_O, select = -i)
-    indicatorNA <- as.integer(!is.na(varNA_i))
+  for (i in 1:length(varsNAind)) {
+    indicatorNA <- as.integer(!is.na(scaled_O[, varsNAind[i]]))
     indNA[[i]] <- indicatorNA
   }
 
-  #get covariates for training
-  X <- subset(scaled_O, select = colnames(O.imputed.scaled) !=varsNA[idx])
-  X <- as.data.frame(X)
-
-  #get rid of all missing values remaining in training data
-  #X[is.na(X)] <- 0  #many other options for imputation, zero just to start
-
-  #use SuperLearner with 10-fold cross-validation to predict missing gene Y
+  #generate indicators and remove testing covariate from training data structure
+  I <- data.frame(matrix(unlist(indNA), nrow = nrow(scaled_O), byrow = TRUE))
+  X <- subset(scaled_O, select = colnames(scaled_O) !=varsNA[idx])
+  
+  #replace all missing values in training/testing data structures with zeros
+  X[is.na(X)] <- 0
+  y[is.na(y)] <- 0
+  
+  #add indicator variables to training data structure
+  X <- cbind(X, I)
+  
+  #use SuperLearner to predict missing gene Y
   yfit.SL <- SuperLearner(y, X, family = gaussian(), SL.library = SL.library,
                           verbose = TRUE)
   yfit[[idx]] <- yfit.SL$SL.predict
@@ -64,12 +64,13 @@ for (i in 1:length(yfit)) {
 }
 
 # replace missing values in original data structure with predicted values
+res_O <- obs_O  #make copy to avoid overwriting original observed data strucutre
 for (i in 1:length(yfit_untrans)) {
-  obs_O[which(is.na(obs_O[,varsNA[i]])), varsNA[i]] <- yfit_untrans[[i]][which(is.na(obs_O[, varsNA[i]]))]
+  res_O[which(is.na(res_O[, varsNA[i]])), varsNA[i]] <- yfit_untrans[[i]][which(is.na(res_O[, varsNA[i]]))]
 }
 
 # clean up workspace a bit
-rm("i", "idx", "O.imputed.scaled", "obs_O.impute", "obs_O.missing", "yfit.SL",
-   "X", "y", "yfit_untrans")
+rm("i", "idx", "indicatorNA", "indNA", "SL.library", "varsNAind", "yfit.SL",
+   "I", "X", "y", "yfit", "yfit_untrans", "scaled_O")
 
 #EndScript
