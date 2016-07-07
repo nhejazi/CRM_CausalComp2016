@@ -36,14 +36,14 @@ for (idx in 1:length(varsNA)) {
   #generate indicators and remove testing covariate from training data structure
   I <- data.frame(matrix(unlist(indNA), nrow = nrow(scaled_O), byrow = TRUE))
   X <- subset(scaled_O, select = colnames(scaled_O) !=varsNA[idx])
-  
+
   #replace all missing values in training/testing data structures with zeros
   X[is.na(X)] <- 0
   y[is.na(y)] <- 0
-  
+
   #add indicator variables to training data structure
   X <- cbind(X, I)
-  
+
   #use SuperLearner to predict missing gene Y
   yfit.SL <- SuperLearner(y, X, family = gaussian(), SL.library = SL.library,
                           verbose = TRUE)
@@ -63,14 +63,19 @@ for (i in 1:length(yfit)) {
                        mean(obs_O[, varsNA[i]], na.rm = TRUE)
 }
 
+# pass SL predicted values from list to dataframe <-- SEEMS INCORRECT
+yfit.pred <- data.frame(matrix(unlist(yfit_untrans), nrow = nrow(scaled_O),
+                               byrow = TRUE))
+
 # replace missing values in original data structure with predicted values
 res_O <- obs_O  #make copy to avoid overwriting original observed data strucutre
 for (i in 1:length(yfit_untrans)) {
-  res_O[which(is.na(res_O[, varsNA[i]])), varsNA[i]] <- yfit_untrans[[i]][which(is.na(res_O[, varsNA[i]]))]
+  res_O[which(is.na(res_O[, varsNA[i]])),
+        varsNA[i]] <- yfit_untrans[[i]][which(is.na(res_O[, varsNA[i]]))]
 }
 
 # clean up workspace a bit
 rm("i", "idx", "indicatorNA", "indNA", "SL.library", "varsNAind", "yfit.SL",
-   "I", "X", "y", "yfit", "yfit_untrans", "scaled_O")
+   "I", "X", "y", "yfit", "scaled_O")
 
 #EndScript
