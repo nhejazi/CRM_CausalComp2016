@@ -1,3 +1,0 @@
-# CRM 2016: "Statistical Causal Inference in Genetics" Competition
-
-This is our analysis...
