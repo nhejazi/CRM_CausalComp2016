@@ -7,9 +7,9 @@
 ###==============================###
 
 # basic programmatic housekeeping
-proj_path <- "~/git_repos/CRM_CausalComp2016/analysis/"
-data_path <- "~/git_repos/CRM_CausalComp2016/data/"
-library(data.table)
+proj_path <- paste0(path.expand("~"), "/git_repos/CRM_CausalComp2016")
+data_path <- paste0(proj_path, "/data/")
+library(data.table); library(dplyr); library(dtplyr)
 
 # load data using included helper script
 #source("load_mouse_data.R")  #includes example causal DAG

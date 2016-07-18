@@ -3,7 +3,7 @@
 ### CRM Workshop and Conference  ###
 ### Montreal, Canada, July 2016  ###
 ### Causal Inference Competition ###
-### Script #2: Imputation & SL   ###
+### Script #3: Imputation w/ SL  ###
 ###==============================###
 
 library(SuperLearner)

@@ -3,7 +3,7 @@
 ### CRM Workshop and Conference  ###
 ### Montreal, Canada, July 2016  ###
 ### Causal Inference Competition ###
-### Script #3: Data Visualizion  ###
+### Script #4: SL Visualizion    ###
 ###==============================###
 
 library(ggplot2); library(plotly)

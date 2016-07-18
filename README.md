@@ -10,7 +10,7 @@ For details about the competition objectives and the data set, consult [this
 link](http://www.crm.umontreal.ca/2016/Genetics16/competition_e.php).
 
 __N.B.__, a link to the competition data set is included with this repository as
-a git submodule. So, to clone this repo, use:
+a git submodule. To clone this repo, use:
 
 ```bash
 git clone --recursive https://github.com/nhejazi/CRM_CausalComp2016.git

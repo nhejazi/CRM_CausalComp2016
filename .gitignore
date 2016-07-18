@@ -1,3 +1,5 @@
 *.pdf
+*.jpg
+*.png
 .Rhistory
 .Rproj.user
