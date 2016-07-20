@@ -35,8 +35,8 @@
 \setlength{\columnsep}{1.5em} % Slightly increase the space between columns
 \setlength{\columnseprule}{0mm} % No horizontal rule between columns
 
-\usepackage{tikz} % Required for flow chart
-\usetikzlibrary{shapes,arrows} % Tikz libraries required for the flow chart in the template
+\usepackage{graphicx}
+\graphicspath{{figs/}}
 
 \newcommand{\compresslist}{ % Define a command to reduce spacing within itemize/enumerate environments, this is used right after \begin{itemize} or \begin{enumerate}
 \setlength{\itemsep}{1pt}
@@ -71,25 +71,28 @@ linewidth=2pt % Width of the border lines around content boxes
 %	TITLE SECTION 
 %----------------------------------------------------------------------------------------
 %
-{\includegraphics[height=4em]{logo.png}} % First university/lab logo on the left
-{\bf\textsc{Unnecessarily Complicated Research Title}\vspace{0.5em}} % Poster title
-{\textsc{\{ John Smith, James Smith and Jane Smith \} \hspace{12pt} University and Department Name}} % Author names and institution
-{\includegraphics[height=4em]{logo.png}} % Second university/lab logo on the right
+{\includegraphics[height=6.5em]{logo_cal.jpg}} % First university/lab logo on the left
+{\bf\textsc{Optimal Ensemble Learning with SuperLearner}\vspace{0.5em}} % Poster title
+{\textsc{\{ Nima Hejazi \& Alan Hubbard \} \hspace{12pt} Division of
+  Biostatistics, UC Berkeley}} % Author names and institution
+{\includegraphics[height=9em]{logo_sph.jpg}} % Second university/lab logo on the right
 
 %----------------------------------------------------------------------------------------
-%	OBJECTIVES
+%	OVERVIEW
 %----------------------------------------------------------------------------------------
 
-\headerbox{Objectives}{name=objectives,column=0,row=0}{
-
-Donec non nisl a \textbf{arcu consequat} varius. Sed suscipit cursus luctus. Nulla sit amet elit augue. Curabitur scelerisque mollis dolor, quis blandit lorem condimentum at. Pellentesque sed nibh vel \textbf{dolor} sagittis semper. 
+\headerbox{Overview}{name=overview,column=0,row=0}{
 
 \begin{enumerate}\compresslist
-\item Feugiat vitae elit
-\item bibendum ante sed lacinia eros in
-\item Curabitur scelerisque arcu consequat varius
-\item Dapibus nulla id purus consectetur
-\item Fringilla integer 
+\item This analysis seeks to generate optimal predictions for 5 genomic covariates across 67 sample observations (nearly evenly distributed across 5 \textit{"knockout"} genotypes).
+\item \textbf{Uninformative censoring:} the competition rules indicate that missingness was artificially introduced; this greatly simplifies the missing data problem to be solved via prediction methods.
+\item Rather than use a single machine learning algorithm to estimate the
+  missing values in the data set, a weighted combination of a library of
+  learning algorithms is used to generate provably optimal predictions.
+\item While the theory underlying the SuperLearner methodology is quite rich, at
+  its core, the method simply uses cross-validation to rank learning algorithms
+  within a provided library according to a meta-learner, building a weighted
+  combination of learning algorithms for prediction.
 \end{enumerate}
 
 \vspace{0.3em} % When there are two boxes, some whitespace may need to be added if the one on the right has more content
@@ -99,36 +102,48 @@ Donec non nisl a \textbf{arcu consequat} varius. Sed suscipit cursus luctus. Nul
 %	INTRODUCTION
 %----------------------------------------------------------------------------------------
 
-\headerbox{Introduction}{name=introduction,column=1,row=0,bottomaligned=objectives}{
+\headerbox{Introduction}{name=introduction,column=1,row=0,bottomaligned=overview}{
 
-Aliquam non lacus dolor, \textit{a aliquam quam}. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla in nibh mauris. Donec vel ligula nisi, a lacinia arcu. Sed mi dui, malesuada vel consectetur et, egestas porta nisi. Sed eleifend pharetra dolor, et dapibus est vulputate eu. \textbf{Integer faucibus elementum felis vitae fringilla.} In hac habitasse platea dictumst. Duis tristique rutrum nisl, nec vulputate elit porta ut. Donec sodales sollicitudin turpis sed convallis. Etiam mauris ligula, blandit adipiscing condimentum eu, dapibus pellentesque risus.
+\begin{itemize}
+	\item The goal of this prediction challenge is to infer the withheld 			values of a single genomic covariate for a subset of individuals from 		  5 randomly selected 'knock-out' conditions in the full data set 				provided. 
+    \item In order to predict the missing values in a \textit{provably 				optimal} manner, this analysis relies on the SuperLearner algorithm, 		 to generate asymptotically optimal prediction.
+    \item The problem of overfitting with the individual (and ensemble) 			learners is avoided by employing V-fold cross-validation (where V = 10 		   in the results presented).
+	\item The 5 genomic covariates that we provide predicted values for all 		have continuous measurements, thus, we use the squared error (L2) 			loss function with SuperLearner.
+\end{itemize}
 }
 
 %----------------------------------------------------------------------------------------
-%	RESULTS 1
+%	RESULTS 2
 %----------------------------------------------------------------------------------------
 
-\headerbox{Results 1}{name=results,column=2,span=2,row=0}{
+\headerbox{Results II}{name=results,column=2,span=2,row=0}{
 
 \begin{multicols}{2}
-\vspace{1em}
+
 \begin{center}
-\includegraphics[width=0.8\linewidth]{placeholder}
-\captionof{figure}{Figure caption}
+\includegraphics[scale=0.25]{covar2_neutrophils}
+\captionof{figure}{fitted vs. true values for neutrophils}
 \end{center}
 
-Aliquam auctor, metus id ultrices porta, risus enim cursus sapien, quis iaculis sapien tortor sed odio. Mauris ante orci, euismod vitae tincidunt eu, porta ut neque. Aenean sapien est, viverra vel lacinia nec, venenatis eu nulla. Maecenas ut nunc nibh, et tempus libero. Aenean vitae risus ante. Pellentesque condimentum dui. Etiam sagittis purus non tellus tempor volutpat. Donec et dui non massa tristique adipiscing.
+\begin{center}
+\includegraphics[scale=0.25]{covar3_lymphocytes}
+\captionof{figure}{fitted vs. true values for lymphocytes}
+\end{center}
+
 \end{multicols}
 
 %------------------------------------------------
 
 \begin{multicols}{2}
-\vspace{1em}
-Sed fringilla tempus hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam ut elit sit amet metus lobortis consequat sit amet in libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel sem magna. Nunc at convallis urna. isus ante. Pellentesque condimentum dui. Etiam sagittis purus non tellus tempor volutpat. Donec et dui non massa tristique adipiscing. Quisque vestibulum eros eu.
 
 \begin{center}
-\includegraphics[width=0.8\linewidth]{placeholder}
-\captionof{figure}{Figure caption}
+\includegraphics[scale=0.25]{covar4_monocytes}
+\captionof{figure}{fitted vs. true values for monocytes}
+\end{center}
+
+\begin{center}
+\includegraphics[scale=0.25]{covar5_basophils}
+\captionof{figure}{fitted vs. true values for basophils}
 \end{center}
 
 \end{multicols}
@@ -138,27 +153,15 @@ Sed fringilla tempus hendrerit. Vestibulum ante ipsum primis in faucibus orci lu
 %	REFERENCES
 %----------------------------------------------------------------------------------------
 
-\headerbox{References}{name=references,column=0,above=bottom}{
+\headerbox{References}{name=references,column=2,above=bottom}{
 
 \renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
 \nocite{*} % Insert publications even if they are not cited in the poster
-\small{ % Reduce the font size in this block
+\tiny{ % Reduce the font size in this block
 \bibliographystyle{unsrt}
-\bibliography{sample} % Use sample.bib as the bibliography file
+\bibliography{poster}
 }}
 
-%----------------------------------------------------------------------------------------
-%	FUTURE RESEARCH
-%----------------------------------------------------------------------------------------
-
-\headerbox{Future Research}{name=futureresearch,column=1,span=2,aligned=references,above=bottom}{ % This block is as tall as the references block
-
-\begin{multicols}{2}
-Integer sed lectus vel mauris euismod suscipit. Praesent a est a est ultricies pellentesque. Donec tincidunt, nunc in feugiat varius, lectus lectus auctor lorem, egestas molestie risus erat ut nibh.
-
-Maecenas viverra ligula a risus blandit vel tincidunt est adipiscing. Suspendisse mollis iaculis sem, in \emph{imperdiet} orci porta vitae. Quisque id dui sed ante sollicitudin sagittis.
-\end{multicols}
-}
 
 %----------------------------------------------------------------------------------------
 %	CONTACT INFORMATION
@@ -167,9 +170,8 @@ Maecenas viverra ligula a risus blandit vel tincidunt est adipiscing. Suspendiss
 \headerbox{Contact Information}{name=contact,column=3,aligned=references,above=bottom}{ % This block is as tall as the references block
 
 \begin{description}\compresslist
-\item[Web] www.university.edu/smithlab
-\item[Email] john@smith.com
-\item[Phone] +1 (000) 111 1111
+\item[Web] \small http://nimahejazi.org \\ www.hubbard.berkeley.edu
+\item[Email] \small nhejazi@berkeley.edu, hubbard@berkeley.edu
 \end{description}
 }
 
@@ -181,101 +183,78 @@ Maecenas viverra ligula a risus blandit vel tincidunt est adipiscing. Suspendiss
 
 \begin{multicols}{2}
 
-\tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=4.5em, text badly centered, node distance=2cm, inner sep=0pt]
-\tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=5em, text centered, rounded corners, minimum height=4em]
-\tikzstyle{line} = [draw, -latex']
-\tikzstyle{cloud} = [draw, ellipse, fill=red!20, node distance=3cm, minimum height=2em]
-
-\begin{tikzpicture}[node distance = 2cm, auto]
-\node [block] (init) {Initialize Model};
-\node [cloud, left of=init] (Start) {Start};
-\node [cloud, right of=init] (Start2) {Start Two};
-\node [block, below of=init] (init2) {Initialize Two};
-\node [decision, below of=init2] (End) {End};
-\path [line] (init) -- (init2);
-\path [line] (init2) -- (End);
-\path [line, dashed] (Start) -- (init);
-\path [line, dashed] (Start2) -- (init);
-\path [line, dashed] (Start2) |- (init2);
-\end{tikzpicture}
+\begin{center}
+\vspace*{-0.51cm}
+\includegraphics[scale=0.285]{genes_correlationGraph.pdf}
+\vspace{-1.8em}
+\captionof{figure}{Graph of Correlation Structure}
+\end{center}
 
 %------------------------------------------------
 
-\begin{itemize}\compresslist
-\item Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh. Phasellus fermentum rutrum elementum. Nam quis justo lectus.
-\item Vestibulum sem ante, hendrerit a gravida ac, blandit quis magna.
-\item Donec sem metus, facilisis at condimentum eget, vehicula ut massa. Morbi consequat, diam sed convallis tincidunt, arcu nunc.
-\item Nunc at convallis urna. isus ante. Pellentesque condimentum dui. Etiam sagittis purus non tellus tempor volutpat. Donec et dui non massa tristique adipiscing.
+\begin{itemize}
+\item In order to visualize the relationship between the genomic covariates in the observed data set, a graph is generated from the correlation matrix.
+\item We hold that PGMs are \textit{probabilistic and not causal}. Thus, we refrain from providing a causal graph based on our prediction.
+\item SuperLearner provides asymptotically optimal prediction, and our results display MSE values that substantiate this claim.
 \end{itemize}
 
 \end{multicols}
 }
 
 %----------------------------------------------------------------------------------------
-%	MATERIALS AND METHODS
+% METHODS
 %----------------------------------------------------------------------------------------
 
-\headerbox{Materials \& Methods}{name=method,column=0,below=objectives,bottomaligned=conclusion}{ % This block's bottom aligns with the bottom of the conclusion block
+\headerbox{Methodology}{name=method,column=0,below=overview,bottomaligned=references}{
+% This block's bottom aligns with the bottom of the conclusion block
 
-The following materials were required to complete the research:
+SuperLearner has several important properties:
+
+\vspace{-0.2em}
 
 \begin{itemize}\compresslist
-\item Curabitur pellentesque dignissim
-\item Eu facilisis est tempus quis
-\item Duis porta consequat lorem
-\item Eu facilisis est tempus quis
+	\item Start by defining a base library of L learners: $ \Psi^{1}, \dots, 		 \Psi^{L}$ to be used within SuperLearner.
+    \item Specify a meta-learning method ($ \Phi $), used to evaluate the base 			learners.
+	\item Use V-fold cross validation in each estimation step (V = 10 in our 		 case) to protect against overfitting and evaluate learners.
+    \item Each base learner is used to generate fitted values for the training 		   fold, generating a new matrix of subset-specific fits.
+    \item Then, the meta-learner is used to find the optimal combination of 		these fits.
 \end{itemize}
 
-The following equations were used for statistical analysis:
+In the analysis for this competition, we use:
 
-\begin{equation}
-\cos^3 \theta =\frac{1}{4}\cos\theta+\frac{3}{4}\cos 3\theta
-\label{eq:refname}
-\end{equation}\
+\vspace{-0.2em}
 
-\begin{equation}
-E = mc^{2}
-\label{eqn:Einstein}
-\end{equation}
-
-Phasellus imperdiet, tortor vitae congue bibendum, felis enim sagittis lorem, et volutpat ante orci sagittis mi. Morbi rutrum laoreet semper. Morbi accumsan enim nec tortor consectetur non commodo nisi sollicitudin. Proin sollicitudin. Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh.
+\begin{itemize}\compresslist
+	\item The full data set, iteratively predicting values for the 5 genomic 		covariates of interest
+	\item In each run of SuperLearner, indicator variables are used to impute 		 the missing values remaining in the training set.
+\end{itemize}
 }
 
 %----------------------------------------------------------------------------------------
-%	RESULTS 2
+% RESULTS 1
 %----------------------------------------------------------------------------------------
 
-\headerbox{Results 2}{name=results2,column=1,below=objectives,bottomaligned=conclusion}{ % This block's bottom aligns with the bottom of the conclusion block
+\headerbox{Results I}{name=results2,column=1,below=overview,bottomaligned=references}{ % This block's bottom aligns with the bottom of the conclusion block
 
-Donec faucibus purus at tortor egestas eu fermentum dolor facilisis. Maecenas tempor dui eu neque fringilla rutrum. Mauris \emph{lobortis} nisl accumsan.
+To assess the performance of SuperLearner, we apply the mean-squared error, discounting observations with missing data in each of the 5 genomic covariates of interest. \\
 
-\begin{center}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\midrule
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\bottomrule
-\end{tabular}
-\captionof{table}{Table caption}
-\end{center}
-
-Nulla ut porttitor enim. Suspendisse venenatis dui eget eros gravida tempor. Mauris feugiat elit et augue placerat ultrices. Morbi accumsan enim nec tortor consectetur non commodo.
+That is, for each covariate $j$, observations with missing values in $y_{j}$, and corresponding fitted values in $\hat{y_{j}}$, are removed, then MSE is applied: $$ MSE_{j} = \frac{1}{n_{j}} \sum_{i = 1}^{n_{j}} (\hat{y_{j}} - y_{j})^{2} $$
 
 \begin{center}
-\begin{tabular}{l l l}
+\begin{tabular}{l l}
 \toprule
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
+\textbf{Covariate} & \textbf{MSE}\\
 \midrule
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
+RBC Distribution Width & 0.00004096 \\
+Neutrophil Differential Count & 0.00846919 \\
+Lymphcyte Differential Count & 0.06623846 \\
+Monocyte Cell Count & 0.00005010 \\
+Basophil Differential Count & 0.00007293 \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Table caption}
+\captionof{table}{"Competition" Covariates with MSE}
 \end{center}
+
 }
 
 %----------------------------------------------------------------------------------------

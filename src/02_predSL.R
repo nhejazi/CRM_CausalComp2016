@@ -6,24 +6,27 @@
 ### Script #3: Imputation w/ SL  ###
 ###==============================###
 
-library(SuperLearner)
-SL.library <- c("SL.loess", "SL.glm", "SL.bayesglm", "SL.stepAIC", "SL.gam",
-                "SL.mean")
+options(scipen = 999) #no scientific notation
+library(data.table); library(dplyr); library(dtplyr); library(SuperLearner)
+SL.library <- c("SL.loess", "SL.stepAIC", "SL.gam", "SL.mean", "SL.xgboost",
+                "SL.glm", "SL.glmnet", "SL.nnet", "SL.randomForest")
 
 # generate observed data and find variables with missingness
 obs_O <- as.data.frame(micedata[, c(5:26), with = FALSE])
 varsNA <- names(which(is.na(colSums(obs_O, na.rm = FALSE))))
 
 # variable scaling
-scaled_O <- scale(obs_O)
+scaled_O <- as.data.frame(scale(obs_O))
 
 yfit <- list()  #store predicted values over all folds of cross-validation
 
 for (idx in 1:length(varsNA)) {
   set.seed(0)
   #get prediction covariate
-  y <- subset(scaled_O, select = varsNA[idx])
-  y <- as.vector(y[, 1])
+  y <- scaled_O %>%
+        dplyr::select(which(colnames(.) %in% varsNA[idx])) %>%
+        unlist() %>%
+        as.vector()
 
   #make missingness indicators for other covariates
   indNA <- list()
@@ -34,8 +37,9 @@ for (idx in 1:length(varsNA)) {
   }
 
   #generate indicators and remove testing covariate from training data structure
-  I <- data.frame(matrix(unlist(indNA), nrow = nrow(scaled_O), byrow = TRUE))
-  X <- subset(scaled_O, select = colnames(scaled_O) !=varsNA[idx])
+  I <- as.data.frame(matrix(unlist(indNA), nrow = nrow(scaled_O), byrow = TRUE))
+  X <- scaled_O %>%
+        dplyr::select(which(colnames(.) != varsNA[idx]))
 
   #replace all missing values in training/testing data structures with zeros
   X[is.na(X)] <- 0
@@ -47,7 +51,7 @@ for (idx in 1:length(varsNA)) {
   #use SuperLearner to predict missing gene Y
   yfit.SL <- SuperLearner(y, X, family = gaussian(), SL.library = SL.library,
                           verbose = TRUE)
-  yfit[[idx]] <- yfit.SL$SL.predict
+  yfit[[idx]] <- as.vector(yfit.SL$SL.predict)
 }
 
 # find indices of missing values for covariates with missingness
@@ -63,16 +67,27 @@ for (i in 1:length(yfit)) {
                        mean(obs_O[, varsNA[i]], na.rm = TRUE)
 }
 
-# pass SL predicted values from list to dataframe <-- SEEMS INCORRECT
-yfit.pred <- data.frame(matrix(unlist(yfit_untrans), nrow = nrow(scaled_O),
-                               byrow = TRUE))
+# pass SL predicted values from list to dataframe (approach is suboptimal) 
+yfit.pred <- as.data.frame(cbind(yfit_untrans[[1]], yfit_untrans[[2]],
+                                 yfit_untrans[[3]], yfit_untrans[[4]],
+                                 yfit_untrans[[5]]))
 
 # replace missing values in original data structure with predicted values
-res_O <- obs_O  #make copy to avoid overwriting original observed data strucutre
+res_O <- obs_O  #make copy to avoid overwriting original observed data structure
 for (i in 1:length(yfit_untrans)) {
   res_O[which(is.na(res_O[, varsNA[i]])),
         varsNA[i]] <- yfit_untrans[[i]][which(is.na(res_O[, varsNA[i]]))]
 }
+
+O.varsNA <- obs_O %>%
+              dplyr::select(which(colnames(.) %in% varsNA)) %>%
+              as.data.frame()
+mse.pred <- (colSums(yfit.pred - O.varsNA,
+                     na.rm = TRUE)^2)/(rep(nrow(O.varsNA),
+                                           length(varsNA)) -
+                                       colSums(is.na(O.varsNA)))
+names(mse.pred) <- varsNA
+
 
 # clean up workspace a bit
 rm("i", "idx", "indicatorNA", "indNA", "SL.library", "varsNAind", "yfit.SL",

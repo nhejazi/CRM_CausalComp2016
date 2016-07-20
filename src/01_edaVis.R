@@ -17,7 +17,7 @@ load.project()
 # examine and plot correlation structure in genomic covariates
 data_genomic <- micedata %>%
                   na.omit() %>%
-                  select(which(substr(colnames(micedata),1,4) %in% "IMPC"))
+                  dplyr::select(which(substr(colnames(.),1,4) %in% "IMPC"))
 
 corr_genomic <- data_genomic %>%
                   cor()
