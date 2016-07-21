@@ -1,7 +1,7 @@
-*.aux
-*.blg
-*.log
-*.tex.bbl
-*.gz
 .Rhistory
 .Rproj.user
+poster/*.aux
+poster/*.blg
+poster/*.log
+poster/*.bbl
+poster/*.gz
