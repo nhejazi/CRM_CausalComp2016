@@ -15,7 +15,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %----------------------------------------------------------------------------------------
-%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+% PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
 \documentclass[landscape,a0paper,fontscale=0.285]{baposter} % Adjust the font scale/size here
@@ -34,9 +34,6 @@
 \usepackage{multicol} % Required for multiple columns
 \setlength{\columnsep}{1.5em} % Slightly increase the space between columns
 \setlength{\columnseprule}{0mm} % No horizontal rule between columns
-
-\usepackage{graphicx}
-\graphicspath{{figs/}}
 
 \newcommand{\compresslist}{ % Define a command to reduce spacing within itemize/enumerate environments, this is used right after \begin{itemize} or \begin{enumerate}
 \setlength{\itemsep}{1pt}
@@ -67,25 +64,29 @@ headerfont=\Large\bf\textsc, % Large, bold and sans serif font in the headers of
 %textfont={\setlength{\parindent}{1.5em}}, % Uncomment for paragraph indentation
 linewidth=2pt % Width of the border lines around content boxes
 }
-%----------------------------------------------------------------------------------------
-%	TITLE SECTION 
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% TITLE SECTION
+%-------------------------------------------------------------------------------
 %
-{\includegraphics[height=6.5em]{logo_cal.jpg}} % First university/lab logo on the left
-{\bf\textsc{Optimal Ensemble Learning with SuperLearner}\vspace{0.5em}} % Poster title
-{\textsc{\{ Nima Hejazi \& Alan Hubbard \} \hspace{12pt} Division of
-  Biostatistics, UC Berkeley}} % Author names and institution
-{\includegraphics[height=9em]{logo_sph.jpg}} % Second university/lab logo on the right
+{\includegraphics[height=7em]{logo_cal.jpg}} % university/lab logo on the left
+{\bf\textsc{Optimal Prediction with SuperLearner}\vspace{0.5em}} % Poster title
+{\textsc{\{ Nima Hejazi \& Alan Hubbard \} \hspace{12pt} Division of Biostatistics, UC Berkeley}}
+  % Author names and institution
+{\includegraphics[height=9em]{logo_sph.jpg}} % university/lab logo on the right
 
-%----------------------------------------------------------------------------------------
-%	OVERVIEW
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% OVERVIEW
+%-------------------------------------------------------------------------------
 
 \headerbox{Overview}{name=overview,column=0,row=0}{
 
 \begin{enumerate}\compresslist
-\item This analysis seeks to generate optimal predictions for 5 genomic covariates across 67 sample observations (nearly evenly distributed across 5 \textit{"knockout"} genotypes).
-\item \textbf{Uninformative censoring:} the competition rules indicate that missingness was artificially introduced; this greatly simplifies the missing data problem to be solved via prediction methods.
+\item This analysis seeks to generate optimal predictions for 5 genomic
+  covariates across 67 sample observations, nearly evenly distributed across 5
+  \textit{"knockout"} genotypes.
+\item \textbf{Uninformative censoring:} the competition rules indicate that
+  missingness was artificially introduced; this greatly simplifies the missing
+  data problem to be solved via prediction methods.
 \item Rather than use a single machine learning algorithm to estimate the
   missing values in the data set, a weighted combination of a library of
   learning algorithms is used to generate provably optimal predictions.
@@ -95,26 +96,35 @@ linewidth=2pt % Width of the border lines around content boxes
   combination of learning algorithms for prediction.
 \end{enumerate}
 
-\vspace{0.3em} % When there are two boxes, some whitespace may need to be added if the one on the right has more content
+\vspace{0.3em} % When there are two boxes, some whitespace may need to be added
+               % if the one on the right has more content
 }
 
-%----------------------------------------------------------------------------------------
-%	INTRODUCTION
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% INTRODUCTION
+%-------------------------------------------------------------------------------
 
 \headerbox{Introduction}{name=introduction,column=1,row=0,bottomaligned=overview}{
 
 \begin{itemize}
-	\item The goal of this prediction challenge is to infer the withheld 			values of a single genomic covariate for a subset of individuals from 		  5 randomly selected 'knock-out' conditions in the full data set 				provided. 
-    \item In order to predict the missing values in a \textit{provably 				optimal} manner, this analysis relies on the SuperLearner algorithm, 		 to generate asymptotically optimal prediction.
-    \item The problem of overfitting with the individual (and ensemble) 			learners is avoided by employing V-fold cross-validation (where V = 10 		   in the results presented).
-	\item The 5 genomic covariates that we provide predicted values for all 		have continuous measurements, thus, we use the squared error (L2) 			loss function with SuperLearner.
+\item The goal of this prediction challenge is to infer the withheld values of a
+  single genomic covariate for a subset of individuals from 5 randomly selected
+  "knock-out" conditions in the full data set provided.
+\item In order to predict the missing values in a \textit{provably optimal}
+  manner, this analysis relies on the SuperLearner algorithm, to generate
+  asymptotically optimal prediction.
+\item The problem of overfitting with the individual (and ensemble) learners is
+  avoided by employing V-fold cross-validation (where $V = 10$ in the results
+  presented).
+\item The 5 genomic covariates that we provide predicted values for all have
+  continuous measurements, thus, we use the squared error (L2) loss function
+  with SuperLearner.
 \end{itemize}
 }
 
-%----------------------------------------------------------------------------------------
-%	RESULTS 2
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% RESULTS 2
+%-------------------------------------------------------------------------------
 
 \headerbox{Results II}{name=results,column=2,span=2,row=0}{
 
@@ -122,12 +132,12 @@ linewidth=2pt % Width of the border lines around content boxes
 
 \begin{center}
 \includegraphics[scale=0.25]{covar2_neutrophils}
-\captionof{figure}{fitted vs. true values for neutrophils}
+\captionof{figure}{fitted vs true values for neutrophils}
 \end{center}
 
 \begin{center}
 \includegraphics[scale=0.25]{covar3_lymphocytes}
-\captionof{figure}{fitted vs. true values for lymphocytes}
+\captionof{figure}{fitted vs true values for lymphocytes}
 \end{center}
 
 \end{multicols}
@@ -138,46 +148,47 @@ linewidth=2pt % Width of the border lines around content boxes
 
 \begin{center}
 \includegraphics[scale=0.25]{covar4_monocytes}
-\captionof{figure}{fitted vs. true values for monocytes}
+\captionof{figure}{fitted vs true values for monocytes}
 \end{center}
 
 \begin{center}
 \includegraphics[scale=0.25]{covar5_basophils}
-\captionof{figure}{fitted vs. true values for basophils}
+\captionof{figure}{fitted vs true values for basophils}
 \end{center}
 
 \end{multicols}
 }
 
-%----------------------------------------------------------------------------------------
-%	REFERENCES
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% REFERENCES
+%-------------------------------------------------------------------------------
 
 \headerbox{References}{name=references,column=2,above=bottom}{
 
-\renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
+\renewcommand{\section}[2]{\vskip 0.05em} % remove "References" section title
 \nocite{*} % Insert publications even if they are not cited in the poster
 \tiny{ % Reduce the font size in this block
 \bibliographystyle{unsrt}
-\bibliography{poster}
+\bibliography{conference_poster}
 }}
 
 
-%----------------------------------------------------------------------------------------
-%	CONTACT INFORMATION
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% CONTACT INFORMATION
+%-------------------------------------------------------------------------------
 
-\headerbox{Contact Information}{name=contact,column=3,aligned=references,above=bottom}{ % This block is as tall as the references block
+\headerbox{Contact Information}{name=contact,column=3,aligned=references,above=bottom}{
+  % This block is as tall as the references block
 
 \begin{description}\compresslist
-\item[Web] \small http://nimahejazi.org \\ www.hubbard.berkeley.edu
-\item[Email] \small nhejazi@berkeley.edu, hubbard@berkeley.edu
+\item[Web] \small http://nimahejazi.org \& hubbard.berkeley.edu
+\item[Email] \small nhejazi@berkeley.edu \& hubbard@berkeley.edu
 \end{description}
 }
 
-%----------------------------------------------------------------------------------------
-%	CONCLUSION
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+% CONCLUSION
+%-------------------------------------------------------------------------------
 
 \headerbox{Conclusion}{name=conclusion,column=2,span=2,row=0,below=results,above=references}{
 
@@ -193,52 +204,68 @@ linewidth=2pt % Width of the border lines around content boxes
 %------------------------------------------------
 
 \begin{itemize}
-\item In order to visualize the relationship between the genomic covariates in the observed data set, a graph is generated from the correlation matrix.
-\item We hold that PGMs are \textit{probabilistic and not causal}. Thus, we refrain from providing a causal graph based on our prediction.
-\item SuperLearner provides asymptotically optimal prediction, and our results display MSE values that substantiate this claim.
+\item In order to visualize the relationship between the genomic covariates in
+  the observed data set, a graph is generated from the correlation matrix.
+\item We hold that a predictive analysis \textbf{\textit{does not target causal
+  parameters}}. Thus, we refrain from providing a causal graph in our work.
+\item SuperLearner provides asymptotically optimal prediction, and our results
+  display MSE values that substantiate this claim.
 \end{itemize}
 
 \end{multicols}
 }
 
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 % METHODS
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 
 \headerbox{Methodology}{name=method,column=0,below=overview,bottomaligned=references}{
-% This block's bottom aligns with the bottom of the conclusion block
+  % This block's bottom aligns with the bottom of the conclusion block
 
-SuperLearner has several important properties:
+The \textbf{SuperLearner} method works as follows:
 
 \vspace{-0.2em}
 
 \begin{itemize}\compresslist
-	\item Start by defining a base library of L learners: $ \Psi^{1}, \dots, 		 \Psi^{L}$ to be used within SuperLearner.
-    \item Specify a meta-learning method ($ \Phi $), used to evaluate the base 			learners.
-	\item Use V-fold cross validation in each estimation step (V = 10 in our 		 case) to protect against overfitting and evaluate learners.
-    \item Each base learner is used to generate fitted values for the training 		   fold, generating a new matrix of subset-specific fits.
-    \item Then, the meta-learner is used to find the optimal combination of 		these fits.
+\item Start by defining a base library of L learners:
+  $\Psi^{1}, \dots, \Psi^{L}$ to be used within SuperLearner.
+\item Specify a meta-learning method ($\Phi$), used to evaluate the base
+  learners.
+\item Use V-fold cross validation in each estimation step ($V = 10$ in our case)
+  to protect against overfitting and evaluate learners.
+\item Each base learner is used to generate fitted values for the training fold,
+  generating a new matrix of subset-specific fits.
+\item Then, the meta-learner is used to find the optimal combination of these
+  fits.
 \end{itemize}
 
-In the analysis for this competition, we use:
+In the analysis for this competition, we have used:
 
 \vspace{-0.2em}
 
 \begin{itemize}\compresslist
-	\item The full data set, iteratively predicting values for the 5 genomic 		covariates of interest
-	\item In each run of SuperLearner, indicator variables are used to impute 		 the missing values remaining in the training set.
+\item The full data set, iteratively predicting values for the 5 genomic
+  covariates of interest
+\item In each run of SuperLearner, indicator variables are used to impute the
+  missing values remaining in the training set.
 \end{itemize}
 }
 
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 % RESULTS 1
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 
-\headerbox{Results I}{name=results2,column=1,below=overview,bottomaligned=references}{ % This block's bottom aligns with the bottom of the conclusion block
+\headerbox{Results I}{name=results2,column=1,below=overview,bottomaligned=references}{
+  % This block's bottom aligns with the bottom of the conclusion block
 
-To assess the performance of SuperLearner, we apply the mean-squared error, discounting observations with missing data in each of the 5 genomic covariates of interest. \\
+To assess the performance of SuperLearner, we apply the mean squared error,
+discounting observations with missing data in each of the 5 genomic covariates
+of interest. \\
 
-That is, for each covariate $j$, observations with missing values in $y_{j}$, and corresponding fitted values in $\hat{y_{j}}$, are removed, then MSE is applied: $$ MSE_{j} = \frac{1}{n_{j}} \sum_{i = 1}^{n_{j}} (\hat{y_{j}} - y_{j})^{2} $$
+That is, for each covariate $j$, observations with missing values in $y_{j}$,
+and corresponding fitted values in $\hat{y_{j}}$, are removed, then MSE is
+applied:
+$$ MSE_{j} = \frac{1}{n_{j}} \sum_{i = 1}^{n_{j}} (\hat{y_{j}} - y_{j})^{2} $$
 
 \begin{center}
 \begin{tabular}{l l}
@@ -254,10 +281,9 @@ Basophil Differential Count & 0.00007293 \\
 \end{tabular}
 \captionof{table}{"Competition" Covariates with MSE}
 \end{center}
-
 }
 
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 
 \end{poster}
 

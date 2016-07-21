@@ -1,6 +1,7 @@
-*.pdf
-*.jpg
-*.png
-*.jpeg
+*.aux
+*.blg
+*.log
+*.tex.bbl
+*.gz
 .Rhistory
 .Rproj.user
