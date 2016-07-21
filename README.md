@@ -26,9 +26,17 @@ git submodule foreach git pull origin master
 
 ## Directions/Roadmap
 
-1. directions
-2. directions
-3. directions
+The workflow for running the preprocessing and analysis scripts for this project
+is described below:
+
+* `munge/` - contains the preprocessing scripts for putting the data set in a
+    form to be used throughout the analysis.
+* `src/` - contains the analysis scripts for using the SuperLearner method for
+    prediction and creating supplementary visualizations.
+* `poster/` - contains the TeX source files for the competition poster submitted
+    to the competition; use the `Makefile` to build the PDF.
+* This project uses [R/ProjectTemplate](http://projecttemplate.net/index.html),
+    see `ProjectTemplate.md` for instructions for use.
 
 ---
 
