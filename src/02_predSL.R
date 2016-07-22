@@ -66,11 +66,8 @@ for (i in 1:length(yfit)) {
   yfit_untrans[[i]] <- (yfit[[i]]*sd(obs_O[, varsNA[i]], na.rm = TRUE)) +
                        mean(obs_O[, varsNA[i]], na.rm = TRUE)
 }
+yfit.pred <- do.call("cbind", lapply(yfit_untrans, as.data.frame))
 
-# pass SL predicted values from list to dataframe (approach is suboptimal) 
-yfit.pred <- as.data.frame(cbind(yfit_untrans[[1]], yfit_untrans[[2]],
-                                 yfit_untrans[[3]], yfit_untrans[[4]],
-                                 yfit_untrans[[5]]))
 
 # replace missing values in original data structure with predicted values
 res_O <- obs_O  #make copy to avoid overwriting original observed data structure
@@ -89,9 +86,22 @@ mse.pred <- (colSums(yfit.pred - O.varsNA,
 names(mse.pred) <- varsNA
 
 
-# export matrix of imputed values
+# export matrix of all covariates with missingness and just imputed values
 colnames(yfit.pred) <- varsNA
 yfit.pred <- data.table(yfit.pred)
+
+impute.SL <- list()
+for (i in 1:length(varsNA)) {
+    impute.SL[[i]] <- yfit.pred %>%
+                        as.data.frame(.) %>%
+                        dplyr::slice(indNA[[i]]) %>%
+                        dplyr::select(which(colnames(.) %in% varsNA[i]))
+}
+impute.SL <- do.call("cbind", lapply(impute.SL, data.table))
+sapply(impute.SL, write.table, file = paste0(proj_path,
+                                             "/results/imputedSL.csv"),
+       append = TRUE, sep = ",")
+
 data.table::fwrite(yfit.pred, file.path = paste0(proj_path,
                                                  "/results/fittedSL.csv"))
 
