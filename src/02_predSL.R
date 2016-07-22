@@ -89,6 +89,13 @@ mse.pred <- (colSums(yfit.pred - O.varsNA,
 names(mse.pred) <- varsNA
 
 
+# export matrix of imputed values
+colnames(yfit.pred) <- varsNA
+yfit.pred <- data.table(yfit.pred)
+data.table::fwrite(yfit.pred, file.path = paste0(proj_path,
+                                                 "/results/fittedSL.csv"))
+
+
 # clean up workspace a bit
 rm("i", "idx", "indicatorNA", "indNA", "SL.library", "varsNAind", "yfit.SL",
    "I", "X", "y", "yfit", "scaled_O")
