@@ -40,6 +40,13 @@ is described below:
 
 ---
 
+## References
+
+* ["Super Learner", 2007. van der Laan, M.J., Polley, E.C., & Hubbard,
+   A.E.](http://biostats.bepress.com/ucbbiostat/paper222/)
+
+---
+
 ## License
 
 &copy; 2016 [Nima Hejazi](http://www.nimahejazi.org) & [Alan

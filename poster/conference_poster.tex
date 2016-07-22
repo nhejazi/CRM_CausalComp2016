@@ -35,7 +35,7 @@
 \setlength{\columnsep}{1.5em} % Slightly increase the space between columns
 \setlength{\columnseprule}{0mm} % No horizontal rule between columns
 
-\newcommand{\compresslist}{ % Define a command to reduce spacing within itemize/enumerate environments, this is used right after \begin{itemize} or \begin{enumerate}
+\newcommand{\compresslist}{ % Define a command to reduce spacing within itemize enumerate environments, this is used right after \begin{itemize} or \begin{enumerate}
 \setlength{\itemsep}{1pt}
 \setlength{\parskip}{0pt}
 \setlength{\parsep}{0pt}
@@ -164,7 +164,6 @@ linewidth=2pt % Width of the border lines around content boxes
 %-------------------------------------------------------------------------------
 
 \headerbox{References}{name=references,column=2,above=bottom}{
-
 \renewcommand{\section}[2]{\vskip 0.05em} % remove "References" section title
 \nocite{*} % Insert publications even if they are not cited in the poster
 \tiny{ % Reduce the font size in this block
