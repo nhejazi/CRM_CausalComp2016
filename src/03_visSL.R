@@ -13,8 +13,14 @@ Sys.setenv("plotly_api_key" = "73h2ov8u7o")
 # make dataframes for linear model ggplots with predicted fits + observed data
 covar_lm <- list()
 for (i in 1:ncol(O.varsNA)) {
-  true_tmp <- O.varsNA[-which(is.na(O.varsNA[, i])), i]
-  fits_tmp <- yfit.pred[-which(is.na(O.varsNA[, i])), i]
+  true_tmp <- O.varsNA %>%
+                dplyr::select(i) %>%
+                dplyr::filter(!is.na(.)) %>%
+                .[[1]]
+  fits_tmp <- yfit.pred %>%
+                dplyr::select(i) %>%
+                dplyr::filter(!is.na(O.varsNA[, i])) %>%
+                .[[1]]
   covar_lm[[i]] <- as.data.frame(cbind(fits_tmp, true_tmp))
 }
 rm(true_tmp, fits_tmp)

@@ -54,11 +54,13 @@ for (idx in 1:length(varsNA)) {
   yfit[[idx]] <- as.vector(yfit.SL$SL.predict)
 }
 
+
 # find indices of missing values for covariates with missingness
 indNA <- list()
 for (i in 1:sum(is.na(colMeans(obs_O)))) {
   indNA[[i]] <- which(is.na(obs_O[,varsNA[i]]))
 }
+
 
 # un-normalize predicted values from the SuperLearner
 yfit_untrans <- list()
@@ -81,11 +83,17 @@ for (i in 1:length(yfit_untrans)) {
 O.varsNA <- obs_O %>%
               dplyr::select(which(colnames(.) %in% varsNA)) %>%
               as.data.frame()
-mse.pred <- (colSums(yfit.pred - O.varsNA,
+
+mse.pred <- (colSums(as.data.frame(yfit.pred) - O.varsNA,
                      na.rm = TRUE)^2)/(rep(nrow(O.varsNA),
                                            length(varsNA)) -
                                        colSums(is.na(O.varsNA)))
-names(mse.pred) <- varsNA
+
+# find average MSE across covariates via weighted average and add to MSE vector
+weights <- (rep(nrow(O.varsNA),length(indNA)) - sapply(indNA, length))/
+            sum(rep(nrow(O.varsNA), length(indNA)) - sapply(indNA, length))
+mse.pred <- c(mse.pred, sum(weights * mse.pred))
+names(mse.pred) <- c(varsNA, "MSE_WeightedAvg")
 
 
 # export matrix of all covariates with missingness and just imputed values
@@ -102,7 +110,7 @@ for (i in 1:length(varsNA)) {
 
 sapply(impute.SL, write.table, file = paste0(proj_path,
                                              "/results/imputedSL.csv"),
-       append = TRUE, sep = ",", col.names = TRUE, row.names = FALSE)
+       append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
 
 data.table::fwrite(yfit.pred, file.path = paste0(proj_path,
                                                  "/results/fittedSL.csv"))
