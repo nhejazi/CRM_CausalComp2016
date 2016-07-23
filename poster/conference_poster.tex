@@ -86,12 +86,12 @@ linewidth=2pt % Width of the border lines around content boxes
   \textit{"knockout"} genotypes.
 \item \textbf{Uninformative censoring:} the competition rules indicate that
   missingness was artificially introduced; this greatly simplifies the missing
-  data problem to be solved via prediction methods.
+  data problem to be solved via prediction and imputation methods.
 \item Rather than use a single machine learning algorithm to estimate the
   missing values in the data set, a weighted combination of a library of
-  learning algorithms is used to generate provably optimal predictions.
-\item While the theory underlying the SuperLearner methodology is quite rich, at
-  its core, the method simply uses cross-validation to rank learning algorithms
+  learning algorithms is used to generate asymptotically optimal predictions.
+\item While the theory underlying the SuperLearner method is quite rich, at its
+  core, the algorithm simply uses cross-validation to rank learning algorithms
   within a provided library according to a meta-learner, building a weighted
   combination of learning algorithms for prediction.
 \end{enumerate}
@@ -262,9 +262,9 @@ discounting observations with missing data in each of the 5 genomic covariates
 of interest. \\
 
 That is, for each covariate $j$, observations with missing values in $y_{j}$,
-and corresponding fitted values in $\hat{y_{j}}$, are removed, then MSE is
+and corresponding fitted values in $\hat{y}_{j}$, are removed, then MSE is
 applied:
-$$ MSE_{j} = \frac{1}{n_{j}} \sum_{i = 1}^{n_{j}} (\hat{y_{j}} - y_{j})^{2} $$
+$$ MSE_{j} = \frac{1}{n_{j}} \sum_{i = 1}^{n_{j}} (\hat{y}_{j} - y_{j})^{2} $$
 
 \begin{center}
 \begin{tabular}{l l}

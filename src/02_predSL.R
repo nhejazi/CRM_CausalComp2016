@@ -76,6 +76,8 @@ for (i in 1:length(yfit_untrans)) {
         varsNA[i]] <- yfit_untrans[[i]][which(is.na(res_O[, varsNA[i]]))]
 }
 
+
+# find the MSE associated with predictions for each covariate of interest
 O.varsNA <- obs_O %>%
               dplyr::select(which(colnames(.) %in% varsNA)) %>%
               as.data.frame()
@@ -97,10 +99,10 @@ for (i in 1:length(varsNA)) {
                         dplyr::slice(indNA[[i]]) %>%
                         dplyr::select(which(colnames(.) %in% varsNA[i]))
 }
-impute.SL <- do.call("cbind", lapply(impute.SL, data.table))
+
 sapply(impute.SL, write.table, file = paste0(proj_path,
                                              "/results/imputedSL.csv"),
-       append = TRUE, sep = ",")
+       append = TRUE, sep = ",", col.names = TRUE, row.names = FALSE)
 
 data.table::fwrite(yfit.pred, file.path = paste0(proj_path,
                                                  "/results/fittedSL.csv"))
