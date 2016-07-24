@@ -68,11 +68,11 @@ linewidth=2pt % Width of the border lines around content boxes
 % TITLE SECTION
 %-------------------------------------------------------------------------------
 %
-{\includegraphics[height=7em]{logo_cal.jpg}} % university/lab logo on the left
+{\includegraphics[height=6.5em]{logo_cal.jpg}} % university/lab logo on left
 {\bf\textsc{Optimal Prediction with SuperLearner}\vspace{0.5em}} % Poster title
 {\textsc{\{ Nima Hejazi \& Alan Hubbard \} \hspace{12pt} Division of Biostatistics, UC Berkeley}}
   % Author names and institution
-{\includegraphics[height=9em]{logo_sph.jpg}} % university/lab logo on the right
+{\includegraphics[height=9em]{logo_sph.jpg}} % university/lab logo on right
 
 %-------------------------------------------------------------------------------
 % OVERVIEW
@@ -180,7 +180,8 @@ linewidth=2pt % Width of the border lines around content boxes
   % This block is as tall as the references block
 
 \begin{description}\compresslist
-\item[Web] \small http://nimahejazi.org \& hubbard.berkeley.edu \\
+\item[Web] \small http://nimahejazi.org \& hubbard.berkeley.edu
+\vspace{0.5em}
 \item[Email] \small nhejazi@berkeley.edu \& hubbard@berkeley.edu
 \end{description}
 }
@@ -244,7 +245,7 @@ In the analysis for this competition, we have used:
 
 \begin{itemize}\compresslist
 \item The full data set, iteratively predicting values for the 5 genomic
-  covariates of interest
+  covariates of interest.
 \item In each run of SuperLearner, indicator variables are used to impute the
   missing values remaining in the training set.
 \end{itemize}
@@ -257,13 +258,15 @@ In the analysis for this competition, we have used:
 \headerbox{Results I}{name=results2,column=1,below=overview,bottomaligned=references}{
   % This block's bottom aligns with the bottom of the conclusion block
 
-To assess the performance of SuperLearner, we apply the mean squared error,
-discounting observations with missing data in each of the 5 genomic covariates
-of interest. \\
+To assess the performance of SuperLearner, we apply the mean squared error
+(MSE), discounting observations with missing data in each of the 5 genomic
+covariates of interest.
+
+\vspace{0.5em}
 
 That is, for each covariate $j$, observations with missing values in $y_{j}$,
-and corresponding fitted values in $\hat{y}_{j}$, are removed, then MSE is
-applied:
+and corresponding fitted values in $\hat{y}_{j}$, are removed. The MSE is then
+computed as follows:
 $$ MSE_{j} = \frac{1}{n_{j}} \sum_{i = 1}^{n_{j}} (\hat{y}_{j} - y_{j})^{2} $$
 
 \begin{center}
