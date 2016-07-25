@@ -1,10 +1,11 @@
-# CRM Causal Inference Competition, 2016 July
+# CRM Causal Inference Challenge, 2016 July
 
-This repository contains materials for an entry into the causal inference
-competition held at the [Centre de Recherches Mathématiques (CRM)
+This repository contains materials for an entry into the [causal inference
+challenge](http://www.crm.umontreal.ca/2016/Genetics16/competition_e.php) held
+at the [Centre de Recherches Mathématiques (CRM)
 workshop](http://www.crm.umontreal.ca/2016/Genetics16/index_e.php) for the short
 thematic program on "Statistical Causal Inference and Applications to Genetics,"
-2016 July, in Montreal, Canada.
+25-29 July 2016 in Montreal, Canada.
 
 For details about the competition objectives and the data set, consult [this
 link](http://www.crm.umontreal.ca/2016/Genetics16/competition_e.php).
@@ -36,14 +37,15 @@ is described below:
 * `poster/` - contains the TeX source file (and supplementary files) for the
     poster presented in the competition.
 * This project uses [R/ProjectTemplate](http://projecttemplate.net/index.html)
-    for organizational purposes; see `ProjectTemplate.md` for instructions.
+    for organizational purposes. See `ProjectTemplate.md` for detailed info.
 
 ---
 
-## References
+## Reference
 
-* ["Super Learner", 2007. van der Laan, M.J., Polley, E.C., & Hubbard,
-   A.E.](http://biostats.bepress.com/ucbbiostat/paper222/)
+* [Mark J. van der Laan, Eric C. Polley, and Alan E. Hubbard. "Super Learner".
+  _Statistical applications in genetics and molecular biology_, 6(1),
+  2007.](http://biostats.bepress.com/ucbbiostat/paper222/)
 
 ---
 

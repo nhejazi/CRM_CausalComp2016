@@ -69,7 +69,7 @@ linewidth=2pt % Width of the border lines around content boxes
 %-------------------------------------------------------------------------------
 %
 {\includegraphics[height=6.5em]{logo_cal.jpg}} % university/lab logo on left
-{\bf\textsc{Optimal Prediction with SuperLearner}\vspace{0.5em}} % Poster title
+{\bf\textsc{Super Learner for Optimal Prediction}\vspace{0.5em}} % Poster title
 {\textsc{\{ Nima Hejazi \& Alan Hubbard \} \hspace{12pt} Division of Biostatistics, UC Berkeley}}
   % Author names and institution
 {\includegraphics[height=9em]{logo_sph.jpg}} % university/lab logo on right
@@ -90,7 +90,7 @@ linewidth=2pt % Width of the border lines around content boxes
 \item Rather than use a single machine learning algorithm to estimate the
   missing values in the data set, a weighted combination of a library of
   learning algorithms is used to generate asymptotically optimal predictions.
-\item While the theory underlying the SuperLearner method is quite rich, at its
+\item While the theory underlying the Super Learner method is quite rich, at its
   core, the algorithm simply uses cross-validation to rank learning algorithms
   within a provided library according to a meta-learner, building a weighted
   combination of learning algorithms for prediction.
@@ -111,14 +111,14 @@ linewidth=2pt % Width of the border lines around content boxes
   single genomic covariate for a subset of individuals from 5 randomly selected
   "knock-out" conditions in the full data set provided.
 \item In order to predict the missing values in a \textit{provably optimal}
-  manner, this analysis relies on the SuperLearner algorithm, to generate
+  manner, this analysis relies on the Super Learner algorithm, to generate
   asymptotically optimal prediction.
 \item The problem of overfitting with the individual (and ensemble) learners is
   avoided by employing V-fold cross-validation (where $V = 10$ in the results
   presented).
 \item The 5 genomic covariates that we provide predicted values for all have
   continuous measurements, thus, we use the squared error (L2) loss function
-  with SuperLearner.
+  with Super Learner.
 \end{itemize}
 }
 
@@ -171,7 +171,6 @@ linewidth=2pt % Width of the border lines around content boxes
 \bibliography{conference_poster}
 }}
 
-
 %-------------------------------------------------------------------------------
 % CONTACT INFORMATION
 %-------------------------------------------------------------------------------
@@ -198,7 +197,7 @@ linewidth=2pt % Width of the border lines around content boxes
 \vspace*{-0.51cm}
 \includegraphics[scale=0.285]{genes_correlationGraph.pdf}
 \vspace{-1.8em}
-\captionof{figure}{Graph of Correlation Structure}
+\captionof{figure}{Graph from Correlation Structure}
 \end{center}
 
 %------------------------------------------------
@@ -208,7 +207,7 @@ linewidth=2pt % Width of the border lines around content boxes
   the observed data set, a graph is generated from the correlation matrix.
 \item We hold that a predictive analysis \textbf{\textit{does not target causal
   parameters}}. Thus, we refrain from providing a causal graph in our work.
-\item SuperLearner provides asymptotically optimal prediction, and our results
+\item Super Learner provides asymptotically optimal prediction, and our results
   display MSE values that substantiate this claim.
 \end{itemize}
 
@@ -222,7 +221,7 @@ linewidth=2pt % Width of the border lines around content boxes
 \headerbox{Methodology}{name=method,column=0,below=overview,bottomaligned=references}{
   % This block's bottom aligns with the bottom of the conclusion block
 
-The \textbf{SuperLearner} method works as follows:
+The \textbf{Super Learner} method works as follows:
 
 \vspace{-0.2em}
 
@@ -246,7 +245,7 @@ In the analysis for this competition, we have used:
 \begin{itemize}\compresslist
 \item The full data set, iteratively predicting values for the 5 genomic
   covariates of interest.
-\item In each run of SuperLearner, indicator variables are used to impute the
+\item In each run of Super Learner, indicator variables are used to impute the
   missing values remaining in the training set.
 \end{itemize}
 }
@@ -258,16 +257,17 @@ In the analysis for this competition, we have used:
 \headerbox{Results I}{name=results2,column=1,below=overview,bottomaligned=references}{
   % This block's bottom aligns with the bottom of the conclusion block
 
-To assess the performance of SuperLearner, we apply the mean squared error
+To assess the performance of Super Learner, we apply the mean squared error
 (MSE), discounting observations with missing data in each of the 5 genomic
 covariates of interest.
 
 \vspace{0.5em}
 
-That is, for each covariate $j$, observations with missing values in $y_{j}$,
-and corresponding fitted values in $\hat{y}_{j}$, are removed. The MSE is then
+That is, for each covariate $j$, observations with missing values in $y^{j}$,
+and corresponding fitted values in $\hat{y}^{j}$, are removed. The MSE is then
 computed as follows:
-$$ MSE_{j} = \frac{1}{n_{j}} \sum_{i = 1}^{n_{j}} (\hat{y}_{j} - y_{j})^{2} $$
+$$ MSE_{j} = \frac{1}{n_{j}} \sum_{i = 1}^{n_{j}} (\hat{y}^{j}_{i} -
+ y^{j}_{i})^{2} $$
 
 \begin{center}
 \begin{tabular}{l l}
