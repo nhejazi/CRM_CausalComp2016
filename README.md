@@ -43,7 +43,7 @@ is described below:
 
 ## Reference
 
-* [Mark J. van der Laan, Eric C. Polley, and Alan E. Hubbard. "Super Learner".
+* [Mark J. van der Laan, Eric C. Polley, and Alan E. Hubbard. "Super Learner."
   _Statistical applications in genetics and molecular biology_, 6(1),
   2007.](http://biostats.bepress.com/ucbbiostat/paper222/)
 
